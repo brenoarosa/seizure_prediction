@@ -7,7 +7,7 @@ from feature_extraction import feature_extraction
 from const import *
 
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger('kaggle_seizure')
 
 def load_matdata(filepath):
     return loadmat(filepath)
@@ -40,10 +40,10 @@ def load_train(path=TRAIN_PATH):
         try:
             matdata = load_matdata(filepath)
         except Exception as e:
-            logger.error("Ignoring corruped file: {}" + filepath)
+            logger.error("Ignoring corruped file: {}".format(filepath))
             continue
 
-        logger.debug("Extracting features from {}".format(filepath))
+        logger.debug("Extracting features from {}: {}".format(n_examples, filepath))
 
         x = feature_extraction(matdata)
 
@@ -79,10 +79,10 @@ def load_test(path=TEST_PATH):
         try:
             matdata = load_matdata(filepath)
         except Exception as e:
-            logger.error("Ignoring corruped file: {}" + filepath)
+            logger.error("Ignoring corruped file: {}".format(filepath))
             continue
 
-        logger.debug("Extracting features from {}".format(filepath))
+        logger.debug("Extracting features from {}: {}".format(n_examples, filepath))
 
         x = feature_extraction(matdata)
 
@@ -102,3 +102,10 @@ def save(data, filename='unnamed.p'):
     f = open(filepath, 'wb')
     pickle.dump(data, f)
     f.close()
+
+def load(filename='unnamed.p'):
+    filepath = os.path.join(CACHE_PATH, filename)
+    f = open(filepath, 'rb')
+    data = pickle.load(f)
+    f.close()
+    return data

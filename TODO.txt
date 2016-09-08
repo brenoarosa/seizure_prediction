@@ -1,0 +1,5 @@
+-- Fix data sequence loading/splitting cross validation
+-- Handle -inf and 0 in time or fft
+-- Replace feature cleaning in pipeline
+-- Removes duplicated code in load_train, load_test
+-- Check corrupted files
